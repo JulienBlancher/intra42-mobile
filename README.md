@@ -46,3 +46,12 @@ $ ionic emulate ios
 Substitute ios with android for Android testing
 
 If you want to run on device, juste run `ionic build PLATFORM`, then open `platforms/PLATFORM` in xcode or your Android IDE.
+
+# Contribute
+
+## On Trello
+A Trello board is available to follow upcoming features: https://trello.com/b/YtboVTXe
+If you want to be a member of it to edit and add cards, contact me :-)
+
+## On Github
+Coming soon
