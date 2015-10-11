@@ -1,11 +1,6 @@
 /* Empty. Add your own CSS if you like */
-@import url(https://fonts.googleapis.com/css?family=Lato:400,900,700);
 
 /* General Styles */
-
-* {
-    font-family: 'Lato', sans-serif !important;
-}
 
 .text-center {
     text-align: center;
@@ -98,34 +93,8 @@ p.loading .spinner svg {
     color: inherit;
 }
 
+
 /* Controllers */
-
-.login {
-    background: url('../img/background.jpg') bottom left;
-}
-
-.login ion-content {
-    padding: 40vh 0
-}
-
-.login h1 {
-    text-align: center;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 30px;
-}
-
-.login .button-42 {
-    display: block;
-    margin: 0 auto;
-}
-
-.login .button-42:after {
-    content: url('../img/logo42-black-20.png');
-    position: relative;
-    top: 5px;
-    left: 2px;
-}
 
 pdfviewer > canvas {
     width: 100%;
@@ -164,17 +133,11 @@ a.project {
     text-overflow: ellipsis;
 }
 
-.tier-0, .tier-1, .tier-2 {
-    color: #5cb85c
-}
+.tier-0, .tier-1, .tier-2 {color: #5cb85c}
 
-.tier-3, .tier-4 {
-    color: #f0ad4e
-}
+.tier-3, .tier-4 {color: #f0ad4e}
 
-.tier-5 {
-    color: #e96965
-}
+.tier-5 {color: #e96965}
 
 .topic-stats .subdued {
     padding: 10px;

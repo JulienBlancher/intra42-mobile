@@ -1,7 +1,43 @@
-<ion-view class="login">
+<ion-view>
+    <ion-header-bar>
+        <h1 class="title">Login</h1>
+    </ion-header-bar>
     <ion-content>
-        <h1>Welcome !</h1>
-        <button class="button button-42" data-ng-click="doLogin()">Signin with </button>
+        <form ng-submit="doLogin()">
+            <div class="list">
+                <label class="item item-input stacked">
+                    <span class="input-label">Student Login</span>
+                    <input type="text" placeholder="Login" ng-model="loginData.login" autocapitalize="off" autocorrect="off" autocomplete="off" required>
+                </label>
+                <label class="item item-input stacked" data-ng-if="loginData.login == 'jblanche' && loginData.year == '2013' && loginData.pool == 'september'">
+                    <span class="input-label">Autologin</span>
+                    <input type="text" placeholder="Login" ng-model="loginData.autologin" autocapitalize="off" autocorrect="off" autocomplete="off">
+                </label>
+                <label class="item item-input stacked">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="Password" ng-model="loginData.password" autocapitalize="off" autocorrect="off" autocomplete="off" required>
+                </label>
+                <label class="item item-input item-select">
+                    <span class="input-label">Year</span>
+                    <select data-ng-model="loginData.year" required>
+                        <option data-ng-selected>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <span class="input-label">Pool</span>
+                    <select data-ng-model="loginData.pool" required>
+                        <option data-ng-selected value="july">July</option>
+                        <option value="august">August</option>
+                        <option value="september">September</option>
+                    </select>
+                </label>
+                <label class="item">
+                    <button class="button button-block button-42" type="submit">Log in</button>
+                </label>
+            </div>
+        </form>
     </ion-content>
     <div data-ng-if="error" class="bar bar-footer bar-assertive">
         <div class="title">{{error}}</div>

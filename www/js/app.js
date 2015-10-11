@@ -6,11 +6,11 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.service.analytics', 'intra42.controllers', 'intra42.services', 'intra42.filters', 'intra42.directives', 'ngPDFViewer'])
 
-    .run(function ($ionicPlatform, $ionicAnalytics, ServicesAvailability) {
+    .run(function ($ionicPlatform, $ionicAnalytics, ConnectionManager) {
         $ionicPlatform.ready(function () {
 
             // In-app update disabled for now because of Android issues .
-            ServicesAvailability.check();
+            ConnectionManager.check();
             $ionicAnalytics.register();
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -31,12 +31,10 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|sms)?:?/);
 
         // Identify app
-        if (config.ionic) {
-            $ionicAppProvider.identify({
-                app_id: config.ionic.app_id,
-                api_key: config.ionic.api_key
-            });
-        }
+        $ionicAppProvider.identify({
+            app_id: '40583840',
+            api_key: 'e48927b797124a8d21cb892c21002b26ffd503f1ae0147a2'
+        });
 
         $stateProvider
 
