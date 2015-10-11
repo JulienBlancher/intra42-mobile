@@ -1,3 +1,5 @@
+! This README is currently in writing and not finished yet !
+
 # Init project
 
 * Add config file

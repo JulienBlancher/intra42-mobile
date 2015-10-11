@@ -31,10 +31,12 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|tel|sms)?:?/);
 
         // Identify app
-        $ionicAppProvider.identify({
-            app_id: config.ionic.app_id,
-            api_key: config.ionic.api_key
-        });
+        if (config.ionic) {
+            $ionicAppProvider.identify({
+                app_id: config.ionic.app_id,
+                api_key: config.ionic.api_key
+            });
+        }
 
         $stateProvider
 
