@@ -38,9 +38,11 @@ var config = {
 
 Note: For now, you must run the app either on a simulator or on a device. It is not possible to run it using `ionic serve`
 
-`$ ionic build ios`
-`$ ionic emulate ios`
-
+To run the app, run:
+```
+$ ionic build ios
+$ ionic emulate ios
+```
 Substitute ios with android for Android testing
 
 If you want to run on device, juste run `ionic build PLATFORM`, then open `platforms/PLATFORM` in xcode or your Android IDE.
