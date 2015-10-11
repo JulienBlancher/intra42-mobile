@@ -1,5 +1,5 @@
 angular.module('intra42.controllers')
-    .controller('LoginCtrl', function ($scope, $location, $ionicLoading, $ionicUser, $ionicHistory, $localStorage, API42Interactions) {
+    .controller('LoginCtrl', function ($rootScope, $scope, $location, $ionicLoading, $ionicUser, $ionicHistory, $localStorage, API42Interactions) {
 
         $scope.showLoad = function () {
             $ionicLoading.show({
@@ -14,16 +14,24 @@ angular.module('intra42.controllers')
 
             API42Interactions.oAuthenticate().then(function (result) {
                 console.log("Response Object -> " + JSON.stringify(result));
-                //$ionicUser.identify({
-                    //                        user_id: res.data.id.toString(),
-                    //                        name: res.data.login,
-                    //                        display_name: res.data.display_name,
-                    //                        image: res.data.image_url,
-                    //                        last_log: new Date().toString()
-                    //                    });
-                    //                    $localStorage.setObject('user', res.data);
-                    //                    $location.path('/app/dashboard');
+                $rootScope.access_token = result.access_token;
+                API42Interactions.run('GET', '/me').then(function(res) {
+                    $ionicUser.identify({
+                        user_id: res.data.id.toString(),
+                        name: res.data.login,
+                        display_name: res.data.display_name,
+                        image: res.data.image_url,
+                        last_log: new Date().toString()
+                    });
+                    $localStorage.setObject('user', res.data);
+                    $scope.hideLoad();
+                    $location.path('/app/dashboard');
+                }, function (err) {
+                    $scope.error = 'There was an error getting your profile';
+                });
             }, function (error) {
+                $scope.hideLoad();
+                $scope.error = 'There was an error logging you in :-(';
                 console.log("Error -> " + error);
             });
         };

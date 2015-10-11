@@ -1,4 +1,4 @@
-angular.module('intra42.services', []).service('API42Interactions', function ($q, $http, $ionicAnalytics, ServicesAvailability) {
+angular.module('intra42.services', []).service('API42Interactions', function ($q, $http, $rootScope, $ionicAnalytics, ServicesAvailability) {
     this.run = function (method, route, datas) {
         ServicesAvailability.check();
         $ionicAnalytics.track('API42Interaction', {
@@ -11,7 +11,8 @@ angular.module('intra42.services', []).service('API42Interactions', function ($q
             method: method,
             url: config.api42.baseUrl + route + '?token=' + config.api42.token,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $rootScope.access_token || null
             },
             withCredentials: true,
             data: datas
