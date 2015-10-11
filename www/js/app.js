@@ -32,8 +32,8 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
 
         // Identify app
         $ionicAppProvider.identify({
-            app_id: '40583840',
-            api_key: 'e48927b797124a8d21cb892c21002b26ffd503f1ae0147a2'
+            app_id: config.ionic.app_id,
+            api_key: config.ionic.api_key
         });
 
         $stateProvider
