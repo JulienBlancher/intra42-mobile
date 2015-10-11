@@ -1,0 +1,69 @@
+<ion-view view-title="Search Students">
+    <ion-content>
+        <div class="bar bar-header item-input-inset search" data-ng-init="initSearch()">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" placeholder="Search" data-ng-model="searchData.login" autocapitalize="off" autocorrect="off" autocomplete="off">
+            </label>
+            <button class="button button-clear" ion-track-tap="UserSearch" data-ng-show="!searching" ion-track-data="{user: user.login, search: searchData.login}" type="submit" data-ng-click="searchUser()">
+                Search
+            </button>
+            <ion-spinner data-ng-show="searching" data-icon="ripple"></ion-spinner>
+        </div>
+
+        <div class="list card student" data-ng-show="student">
+
+            <div class="item item-avatar">
+                <img src="{{student.image_url}}">
+                <button class="button button-outline icon-right button-42 user-favorites" data-ng-class="student && isFavorite() ? 'ion-eye-disabled' : 'ion-eye'" data-ng-click="student && isFavorite() ? removeFromFavorites() : addToFavorites()" data-ng-bind="student && isFavorite() ? 'Unfollow' : 'Follow'"></button>
+                <!--<i class="ion-close-round" data-ng-click="student = null"></i>-->
+                <h2>{{student.display_name}}</h2>
+
+                <p>{{student.login}}</p>
+            </div>
+
+            <div class="item bar" data-ng-class="{'bar-balanced': student.location, 'bar-assertive': !student.location}">
+                <h1 class="title">{{student.location || 'Unavailable'}}</h1>
+            </div>
+
+            <div class="list">
+                <div class="row item icon-left padding phone" data-ng-show="student.phone">
+                    <div class="col col-25">
+                        <b>Phone</b>
+                    </div>
+                    <div class="col col-75">
+                        <a class="pull-right button button-42 icon ion-ios-telephone" data-ng-href="tel:{{student.phone}}"></a>
+                        <a class="pull-right button button-42 icon ion-android-chat" data-ng-href="sms:{{student.phone}}"></a>
+                    </div>
+                </div>
+                <div class="row item icon-left progress-container">
+                    <div class="col col-25 progress-label">
+                        <b>Level</b>
+                    </div>
+                    <div class="col col-75">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: {{student.cursus[0].level | progressLevel }}%"></div>
+                            <span class="progress-value">{{student.cursus[0].level | level}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item icon-left">
+                    <b>ETEC</b>
+                    <span class="pull-right">{{student.etec | date:'MMMM yyyy'}}</span>
+                </div>
+                <div class="item icon-left">
+                    <b>Correction Points</b>
+                    <span class="badge badge-42">{{student.correction_count}}</span>
+                </div>
+                <div class="item icon-left">
+                    <b>Wallet</b>
+                    <span class="badge badge-42">{{student.wallet}}</span>
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+    <div data-ng-if="error" class="bar bar-footer bar-assertive">
+        <div class="title">{{error}}</div>
+    </div>
+</ion-view>

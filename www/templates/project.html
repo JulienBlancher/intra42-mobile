@@ -1,0 +1,78 @@
+<ion-view view-title="Project Detail">
+    <ion-content>
+        <p class="text-center loading" data-ng-show="!project">
+            <ion-spinner icon="ripple"></ion-spinner>
+        </p>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="getProject()">
+        </ion-refresher>
+        <div class="project" data-ng-show="project" data-ng-init="getProject()">
+            <div class="card">
+                <div class="item item-divider text-center">
+                    {{project.name}}
+                    <span class="badge badge-42" data-ng-show="project.tier">Tier {{project.tier}}</span>
+                </div>
+                <div class="item item-text-wrap">
+                    <div class="project-skills" data-ng-show="project.skills | length">
+                        <i class="ion-ribbon-b"></i>
+                        <span data-ng-repeat="skill in project.skills track by $index">{{skill.name}}<span data-ng-if="$index + 1 < project.skills.length">, </span></span>
+                    </div>
+                    <div class="project-counts">
+                        <i class="ion-ios-people"></i>
+                        <span>{{project.counts.currently_registered.users}} users currently registered in {{project.counts.currently_registered.teams}} teams</span>
+                        <br>
+                        <i class="ion-ios-people"></i>
+                        <span>{{project.counts.registered.users}} users registered in {{project.counts.registered.teams}} teams ever</span>
+                        <br>
+                        <i class="ion-ios-clock"></i>
+                        <span>Between {{project.min_estimate_time | msToWeeks}} and {{project.max_estimate_time | msToWeeks}} weeks</span>
+                    </div>
+                </div>
+                <!--<div data-ng-show="!project.solo" data-ng-init="getProjectTeam()" >-->
+                <!--</div>-->
+            </div>
+            <div class="card" data-ng-show="project.children | length">
+                <div class="item item-divider text-center">
+                    Sub Projects
+                </div>
+                <a class="item item-text-wrap" ui-sref="app.project({projectSlug: getProjectSlug(child.url)})" data-ng-repeat="child in project.children">
+                    {{child.name}}
+                </a>
+            </div>
+            <div class="card" data-ng-show="hasElearning()">
+                <div class="item item-divider text-center">
+                    Elearning
+                </div>
+                <div class="item item-text-wrap" data-ng-repeat="attachment in project.attachments" data-ng-if="attachment.kind == 'link'">
+                    <a class="item" data-ng-click="window.open(attachment.link, '_system');">{{attachment.label}}</a>
+                </div>
+            </div>
+            <div class="card" data-ng-show="hasPDF()">
+                <div class="item item-divider text-center">
+                    Subject
+                </div>
+                <div class="row">
+                    <div class="pdf-load" data-ng-hide="pdfURL">
+                        <button class="button" ng-click="loadSubject()">Load PDF</button>
+                        <div class="progress" data-ng-show="progress && progress < 100">
+                            <div class="progress-bar" style="width: {{progress || 0}}%"></div>
+                            <span class="progress-value">{{progress}} %</span>
+                        </div>
+                    </div>
+                    <div class="pdf-buttons text-center" data-ng-show="pdfURL">
+                        <button class="button" ng-click="gotoPage(1)">|&lt;</button>
+                        <button class="button" ng-click="prevPage()">&lt;</button>
+                        <button class="button" ng-click="nextPage()">&gt;</button>
+                        <button class="button" ng-click="gotoPage(totalPages)">&gt;|</button>
+                        <br>
+                        <span class="label" ng-show="totalPages">{{currentPage}}/{{totalPages}}</span>
+                    </div>
+                </div>
+                <div class="row" data-ng-show="pdfURL">
+                    <pdfviewer src="{{pdfURL}}" on-page-load='pageLoaded(page,total)' id="viewer" load-progress='loadProgress(loaded, total, state)'></pdfviewer>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

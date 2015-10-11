@@ -1,0 +1,11 @@
+<ion-view>
+    <ion-header-bar>
+        <h1 class="title">Login</h1>
+    </ion-header-bar>
+    <ion-content>
+        <button class="button button-block button-42" data-ng-click="doLogin()">Authenticate with 42</button>
+    </ion-content>
+    <div data-ng-if="error" class="bar bar-footer bar-assertive">
+        <div class="title">{{error}}</div>
+    </div>
+</ion-view>

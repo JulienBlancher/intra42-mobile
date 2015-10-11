@@ -1,0 +1,24 @@
+<ion-view view-title="Projects">
+    <ion-content>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="getProjects()">
+        </ion-refresher>
+        <p class="text-center loading" data-ng-hide="projects | length">
+            <ion-spinner icon="ripple"></ion-spinner>
+        </p>
+        <div class="list list-inset" data-ng-init="getProjects()">
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Search" data-ng-model="search">
+            </label>
+        </div>
+        <div class="card list" data-ng-show="projects | length">
+            <a class="item row project" data-ng-repeat="project in projects | filter: search" ui-sref="app.project({projectSlug: project.slug})">
+                <span class="col-50 project-name">{{project.name}}</span>
+                <span class="col-offset-10 col-25">{{project.min_estimate_time | msToWeeks}} ~ {{project.min_estimate_time | msToWeeks}} w</span>
+                <span class="col-10 tier-{{project.tier}}">T{{project.tier}}</span>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,59 @@
+<ion-view view-title="Topic">
+    <ion-content>
+        <p class="text-center loading" data-ng-show="!topic && !(topic.length)">
+            <ion-spinner icon="ripple"></ion-spinner>
+        </p>
+        <div class="list card topic" data-ng-show="topic && topic | length">
+            <div class="item item-avatar">
+                <img data-ng-src="{{topic.mainMessage.author.login | userImageUrl}}" data-err-src="/img/logo42.png">
+
+                <h2>{{topic.name}}</h2>
+
+                <p>{{topic.mainMessage.author.login}}</p>
+            </div>
+            <div class="item item-body">
+                <p class="topic-content" data-ng-bind-html="topic.mainMessage.content.html"></p>
+
+                <div class="topic-stats">
+                    <span class="subdued"><i class="ion-thumbsup"></i>{{topic.mainMessage.votes.upvotes}}</span>
+                    <span class="subdued"><i class="ion-thumbsdown"></i>{{topic.mainMessage.votes.downvotes}}</span>
+                    <span class="subdued"><i class="ion-bug"></i>{{topic.mainMessage.votes.trollvotes}}</span>
+                </div>
+            </div>
+            <!--<div class="item item-divider">-->
+            <!--</div>-->
+            <div class="item topic-message" data-ng-repeat="message in topic.messages">
+                <div class="item-avatar">
+                    <img data-ng-src="{{message.author.login | userImageUrl}}" data-err-src="/img/logo42.png">
+
+                    <h2><a ui-sref="app.students({ login: message.author.login })">{{message.author.login}}</a></h2>
+                </div>
+                <div class="item-body">
+                    <p data-ng-bind-html="message.content.html"></p>
+
+                    <div class="topic-stats">
+                        <span class="subdued"><i class="ion-thumbsup"></i>{{message.votes.upvotes}}</span>
+                        <span class="subdued"><i class="ion-thumbsdown"></i>{{message.votes.downvotes}}</span>
+                        <span class="subdued"><i class="ion-bug"></i>{{message.votes.trollvotes}}</span>
+                    </div>
+                </div>
+                <div class="item-body topic-reply" data-ng-repeat="reply in message.replies">
+                    <div class="item-avatar">
+                        <img data-ng-src="{{reply.author.login | userImageUrl}}" data-err-src="/img/logo42.png">
+
+                        <h2><a ui-sref="app.students({ login: reply.author.login })">{{reply.author.login}}</a></h2>
+                    </div>
+                    <div class="item-body">
+                        <p data-ng-bind-html="reply.content.html"></p>
+
+                        <div class="topic-stats">
+                            <span class="subdued"><i class="ion-thumbsup"></i>{{reply.votes.upvotes}}</span>
+                            <span class="subdued"><i class="ion-thumbsdown"></i>{{reply.votes.downvotes}}</span>
+                            <span class="subdued"><i class="ion-bug"></i>{{reply.votes.trollvotes}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

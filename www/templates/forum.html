@@ -1,0 +1,14 @@
+<ion-view view-title="Student Life">
+    <ion-content>
+        <p class="text-center loading" data-ng-show="!topics || !(topics | length)">
+            <ion-spinner icon="ripple"></ion-spinner>
+        </p>
+        <div class="list card" data-ng-repeat="topic in topics | orderBy: '-updated_at'">
+            <a class="item item-avatar" ui-sref="app.topic({topicId: topic.id})">
+                <img data-ng-src="{{topic.author.login | userImageUrl}}" data-err-src="/img/logo42.png">
+                <h2>{{topic.name}}</h2>
+                <p>{{topic.author.login}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,41 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Update App</h1>
+
+        <div class="buttons">
+            <button class="button button-clear" ng-click="cancel()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="card">
+            <div class="item item-divider text-center">
+                Download Progress
+            </div>
+            <div class="item">
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{downloadProgress || 0}}%"></div>
+                    <span class="progress-value">{{downloadProgress}} %</span>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider text-center">
+                Extraction Progress
+            </div>
+            <div class="item">
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{extractionProgress || 0}}%"></div>
+                    <span class="progress-value">{{extractionProgress}} %</span>
+                </div>
+            </div>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-42" data-ng-click="closeModal()">
+                Update in background
+            </button>
+        </div>
+    </ion-content>
+    <div data-ng-show="error" class="bar bar-footer bar-assertive">
+        <div class="title">{{error}}</div>
+    </div>
+</ion-modal-view>

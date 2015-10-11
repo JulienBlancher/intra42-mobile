@@ -1,0 +1,93 @@
+<ion-view view-title="Dashboard">
+    <ion-content>
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="refresh()">
+        </ion-refresher>
+        <div>
+            <div class="list card user" data-ng-show="user">
+
+                <div class="item item-avatar">
+                    <img src="{{user.image_url}}">
+
+                    <h2>{{user.display_name}}</h2>
+
+                    <p>{{user.login}}</p>
+                </div>
+
+                <div class="list">
+                    <div class="row item icon-left progress-container">
+                        <div class="col col-25 progress-label">
+                            <b>Level</b>
+                        </div>
+                        <div class="col col-75">
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{user.cursus[0].level | progressLevel}}%"></div>
+                                <span class="progress-value">{{user.cursus[0].level | level}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item icon-left">
+                        <b>ETEC</b>
+                        <span class="pull-right">{{user.etec | date:'MMMM yyyy'}}</span>
+                    </div>
+                    <div class="item icon-left">
+                        <b>Correction Points</b>
+                        <span class="badge badge-42">{{user.correction_count}}</span>
+                    </div>
+                    <div class="item icon-left">
+                        <b>Wallet</b>
+                        <span class="badge badge-42">{{user.wallet}}</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="list card defenses" data-ng-if="defenses && defenses | length">
+                <div class="item item-divider text-center">
+                    Defenses
+                </div>
+
+                <div class="item item-text-wrap" data-ng-repeat="defense in defenses">
+                    <span class="sub-item" data-ng-if="defense.corrector === 'invisible'">
+                        You have a correction scheduled <!--on project {{(defense.project.parent.name ? defense.project.parent.name + ' - ' + defense.project.name : defense.project.name)}} -->{{defense.begin_at | defenseDate}}
+                    </span>
+                    <a class="sub-item" ui-sref="app.students-search({ login: defense.corrector.login })" data-ng-if="defense.corrector !== 'invisible' && defense.corrector.login != user.login">
+                        You will be corrected by {{defense.corrector.login}} on project {{(defense.project.parent.name ? defense.project.parent.name + ' - ' + defense.project.name : defense.project.name)}} {{defense.begin_at | defenseDate}}
+                    </a>
+                    <a class="sub-item" ui-sref="app.students-search({ login: defense.team.users[0].login })" data-ng-if="defense.corrector !== 'invisible' && defense.corrector.login == user.login">
+                        You will correct {{defense.team.name}} on project {{(defense.project.parent.name ? defense.project.parent.name + ' - ' + defense.project.name : defense.project.name)}} {{defense.begin_at | defenseDate}}
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="list card current-projects item-text-wrap" data-ng-show="projects && projects | length">
+
+                <div class="item item-divider text-center">
+                    Current Projects
+                </div>
+
+                <a class="item" data-ng-repeat="project in projects" ui-sref="app.project({ projectSlug: getProjectSlug(project.url) })">
+                    <h3>{{project.name}}</h3>
+                </a>
+            </div>
+
+            <div class="list card skills" data-ng-show="skills && skills | length">
+
+                <div class="item item-divider text-center">
+                    Skills
+                </div>
+
+                <div class="item progress-container" data-ng-repeat="skill in skills">
+                    <p class="skill-name">{{skill.name}}</p>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: {{skill.level | progressLevel}}%"></div>
+                        <span class="progress-value">{{skill.level | level}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

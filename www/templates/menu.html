@@ -1,0 +1,56 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+                </button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon button-clear ion-power logout" data-ng-controller="LoginCtrl" data-ng-show="user" data-ng-click="doLogout()">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">Intra 42</h1>
+        </ion-header-bar>
+        <ion-content>
+            <ion-list>
+                <ion-item menu-close class="item item-icon-left" href="#/dashboard">
+                    <i class="ion-ios-speedometer"></i>
+                    Dashboard
+                </ion-item>
+                <ion-item menu-close class="item item-icon-left" href="#/app/projects">
+                    <i class="ion-briefcase"></i>
+                    Projects
+                </ion-item>
+                <ion-item menu-close class="item item-icon-left" href="#/app/forum" data-ng-if="user.cursus[0].id == 1">
+                    <i class="ion-chatbubbles"></i>
+                    Student Life
+                </ion-item>
+                <ion-item menu-close class="item item-icon-left" href="#/app/students/search">
+                    <i class="ion-person-stalker"></i>
+                    Students
+                </ion-item>
+                <ion-item menu-close class="item item-icon-left" href="#/app/students/favorites">
+                    <i class="ion-ios-people"></i>
+                    Followed students
+                </ion-item>
+                <ion-item menu-close class="item item-icon-left" href="#/app/settings">
+                    <i class="ion-ios-cog"></i>
+                    Settings
+                </ion-item>
+                <ion-item menu-close class="item item-icon-left" href="mailto:jblanche@student.42.fr?subject=42 App Review">
+                    <i class="ion-speakerphone"></i>
+                    Feedback
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>
