@@ -11,10 +11,11 @@ angular.module('intra42.controllers')
         };
 
         $scope.doLogin = function () {
+            $rootScope.Authentication = {};
 
             API42Interactions.oAuthenticate().then(function (result) {
                 console.log("Response Object -> " + JSON.stringify(result));
-                $rootScope.access_token = result.access_token;
+                $rootScope.Authentication.tokens = result;
                 API42Interactions.run('GET', '/me').then(function(res) {
                     $ionicUser.identify({
                         user_id: res.data.id.toString(),
@@ -41,7 +42,7 @@ angular.module('intra42.controllers')
             $localStorage.delete('userProjects');
             $localStorage.delete('userSkills');
             $localStorage.delete('defenses');
-            delete $scope.user;
+            delete $rootScope.Authentication;
             delete $scope.userProjects;
             delete $scope.userSkills;
             delete $scope.defenses;

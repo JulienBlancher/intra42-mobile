@@ -11,6 +11,7 @@ angular.module('intra42.services', []).service('API42Interactions', function ($q
             method: method,
             url: config.api42.baseUrl + route + '?token=' + config.api42.token,
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + $rootScope.access_token || null
             },
@@ -29,11 +30,11 @@ angular.module('intra42.services', []).service('API42Interactions', function ($q
             var browserRef = window.open(config.api42.baseUrl + '/oauth/authorize?client_id=' + config.api42.client_id + '&redirect_uri=' + config.api42.callback + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
             browserRef.addEventListener('loadstart', function (event) {
                 if ((event.url).indexOf(config.api42.callback) === 0) {
-                    var requestToken = (event.url).split('code=')[1];
-                    console.log(requestToken);
+                    var code = (event.url).split('code=')[1];
+                    console.log(code);
 
                     var authData = {
-                        code: requestToken,
+                        code: code,
                         grant_type: 'authorization_code',
                         client_id: config.api42.client_id,
                         client_secret: config.api42.client_secret,
