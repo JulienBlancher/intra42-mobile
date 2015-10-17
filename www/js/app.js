@@ -6,11 +6,11 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.service.analytics', 'intra42.controllers', 'intra42.services', 'intra42.filters', 'intra42.directives', 'ngPDFViewer'])
 
-    .run(function ($ionicPlatform, $ionicAnalytics, ServicesAvailability) {
+    .run(function ($ionicPlatform, $ionicAnalytics) {
         $ionicPlatform.ready(function () {
 
             // In-app update disabled for now because of Android issues .
-            ServicesAvailability.check();
+            //ServicesAvailability.check();
             $ionicAnalytics.register();
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

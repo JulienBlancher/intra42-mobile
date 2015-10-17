@@ -1,30 +1,35 @@
 angular.module('intra42.services', []).service('API42Interactions', function ($q, $http, $rootScope, $ionicAnalytics, ServicesAvailability) {
     this.run = function (method, route, datas) {
         ServicesAvailability.check();
+        //Session.check();
+
         $ionicAnalytics.track('API42Interaction', {
                 method: method,
                 route: route,
                 datas: datas
             }
         );
+
         return $http({
             method: method,
             url: config.api42.baseUrl + route + '?token=' + config.api42.token,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + $rootScope.access_token || null
+                'Authorization': 'Bearer ' + ($rootScope.Authentication.tokens.access_token || null)
             },
             withCredentials: true,
             data: datas
         }).error(function (data, status) {
             console.log("API42Interractions Error. Code : " + status + ". Data : " + data);
+            console.log(data);
         });
     };
 
     this.oAuthenticate = function () {
         var deferred = $q.defer();
         var that = this;
+
 
         if (window.cordova) {
             var browserRef = window.open(config.api42.baseUrl + '/oauth/authorize?client_id=' + config.api42.client_id + '&redirect_uri=' + config.api42.callback + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');

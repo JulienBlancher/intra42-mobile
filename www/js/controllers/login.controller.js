@@ -1,5 +1,5 @@
 angular.module('intra42.controllers')
-    .controller('LoginCtrl', function ($rootScope, $scope, $location, $ionicLoading, $ionicUser, $ionicHistory, $localStorage, API42Interactions) {
+    .controller('LoginCtrl', function ($rootScope, $scope, $location, $ionicLoading, $ionicUser, $ionicHistory, $localStorage, API42Interactions, Session) {
 
         $scope.showLoad = function () {
             $ionicLoading.show({
@@ -11,20 +11,21 @@ angular.module('intra42.controllers')
         };
 
         $scope.doLogin = function () {
-            $rootScope.Authentication = {};
+            $rootScope.Authentication = {
+                tokens: {},
+                user: {}
+            };
 
-            API42Interactions.oAuthenticate().then(function (result) {
-                console.log("Response Object -> " + JSON.stringify(result));
-                $rootScope.Authentication.tokens = result;
-                API42Interactions.run('GET', '/me').then(function(res) {
-                    $ionicUser.identify({
-                        user_id: res.data.id.toString(),
-                        name: res.data.login,
-                        display_name: res.data.display_name,
-                        image: res.data.image_url,
-                        last_log: new Date().toString()
-                    });
-                    $localStorage.setObject('user', res.data);
+            API42Interactions.oAuthenticate().then(function (tokens) {
+                console.log("Response Object -> " + JSON.stringify(tokens));
+                $rootScope.Authentication.tokens = tokens;
+                API42Interactions.run('GET', '/me').then(function(user) {
+                    var sessionData = {
+                        user: user.data,
+                        tokens: tokens
+                    };
+
+                    Session.create(sessionData);
                     $scope.hideLoad();
                     $location.path('/app/dashboard');
                 }, function (err) {
@@ -38,11 +39,11 @@ angular.module('intra42.controllers')
         };
 
         $scope.doLogout = function () {
-            $localStorage.delete('user');
+            Session.destroy();
+
             $localStorage.delete('userProjects');
             $localStorage.delete('userSkills');
             $localStorage.delete('defenses');
-            delete $rootScope.Authentication;
             delete $scope.userProjects;
             delete $scope.userSkills;
             delete $scope.defenses;

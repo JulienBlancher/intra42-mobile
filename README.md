@@ -14,7 +14,7 @@ Example config file:
 ```
 var config = {
     api42 : {
-        baseUrl: 'https://api.intrav2.42.fr',
+        baseUrl: 'https://api.intrav2.42.fr/v2',
         client_id: 'YOUR_API42_CLIENT_ID',
         client_secret: 'YOUR_API42_CLIENT_SECRET',
         callback: 'http://localhost/callback'
