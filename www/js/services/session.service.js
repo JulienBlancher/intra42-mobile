@@ -19,7 +19,7 @@ angular.module('intra42.services').service('Session', function ($localStorage, $
     this.check = function () {
         console.log('Session check');
 
-        var session = $localStorage.get('Session');
+        var session = JSON.parse($localStorage.get('Session'));
 
         if (!session) {
             $state.go('login');
