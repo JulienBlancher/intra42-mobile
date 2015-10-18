@@ -23,6 +23,8 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
                 StatusBar.styleDefault();
             }
 
+            Session.check();
+
             $rootScope.$on('$stateChangeStart', function (event) {
                 if (!Session.check()) {
                     event.preventDefault();
@@ -50,12 +52,7 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
                 url: "/app",
                 abstract: true,
                 templateUrl: "templates/menu.html",
-                controller: 'AppCtrl',
-                resolve: {
-                    Session: function(Session) {
-                        return Session.check();
-                    }
-                }
+                controller: 'AppCtrl'
             })
 
             .state('login', {
