@@ -53,7 +53,9 @@ angular.module('intra42.controllers')
             $scope.error = null;
             $scope.student = null;
             $scope.searching = true;
+            console.log('Search user' + $scope.searchData.login);
             API42Interactions.run('GET', '/users/' + $scope.searchData.login).then(function (res) {
+                console.log(res);
                 if (typeof(res.data) != 'object') {
                     $scope.searching = false;
                     $scope.error = 'Wrong login'

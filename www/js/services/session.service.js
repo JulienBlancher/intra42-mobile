@@ -1,5 +1,7 @@
 angular.module('intra42.services').service('Session', function ($localStorage, $rootScope, $state) {
     this.create = function (data) {
+        console.log('Create Session');
+        console.log(data);
         $localStorage.setObject('Session', data);
         $rootScope.Authentication = data;
     };
@@ -15,13 +17,15 @@ angular.module('intra42.services').service('Session', function ($localStorage, $
     };
 
     this.check = function () {
+        console.log('Session check');
+
         var session = $localStorage.get('Session');
 
-        console.log(session);
         if (!session) {
             $state.go('login');
             return null;
         } else if (session && (!$rootScope.Authentication || !Object.keys($rootScope.Authentication).length)) {
+            console.log('Session found and set');
             $rootScope.Authentication = session;
         } else {
             return session;

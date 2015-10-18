@@ -5,6 +5,4 @@ angular.module('intra42.controllers')
             $scope.$broadcast('scroll.refreshComplete');
         };
 
-        // Refresh user on page load
-        $scope.refresh();
     });

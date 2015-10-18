@@ -9,10 +9,11 @@ angular.module('intra42.services', []).service('API42Interactions', function ($q
                 datas: datas
             }
         );
-
+4
+        console.log('run API42Interactions ' + $rootScope.Authentication.tokens.access_token);
         return $http({
             method: method,
-            url: config.api42.baseUrl + route + '?token=' + config.api42.token,
+            url: config.api42.baseUrl + route,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -61,7 +62,11 @@ angular.module('intra42.services', []).service('API42Interactions', function ($q
                 deferred.reject('The sign in flow was canceled');
             });
         } else {
-            deferred.reject('Cannot authenticate via a web browser');
+            if (config.tmp.access_token) {
+                deferred.resolve({access_token: config.tmp.access_token});
+            } else {
+                deferred.reject('Cannot authenticate via a web browser');
+            }
         }
         return deferred.promise;
     };

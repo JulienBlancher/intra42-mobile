@@ -1,4 +1,5 @@
 angular.module('intra42.controllers', []).controller('AppCtrl', function (Session) {
 
-    Session.check();
+    console.log('App Ctrl loaded');
+    //Session.check();
 });
