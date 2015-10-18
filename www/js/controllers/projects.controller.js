@@ -1,25 +1,40 @@
 angular.module('intra42.controllers')
-    .controller('ProjectsCtrl', function ($scope, $localStorage, API42Interactions) {
-        var user = $localStorage.getObject('user');
-
-        $scope.getProjectSlug = function (url) {
-            // Url looks like https://api.42.fr/projects/project-slug
-            return url.match(new RegExp("^https?:\/\/[a-z0-9\.]+\/projects\/(.*)\/?$"))[1];
-        };
+    .controller('ProjectsCtrl', function ($rootScope, $scope, $localStorage, API42Interactions) {
+        $scope.$watch('Authentication', function (n, o) {
+            if (n === undefined) {
+                return;
+            }
+            $scope.getProjects();
+        }, true);
 
         $scope.projects = [];
-        $scope.getProjects = function() {
-            var cursusId = user.cursus[0].id;
-            API42Interactions.run('GET', '/cursus/' + cursusId + '/projects').then(function (res) {
+        $scope.getProjects = function (page) {
+            var user = $rootScope.Authentication.user;
+
+            page = (page === undefined ? 1 : page);
+
+            var cursusId = user.cursus[0].cursus.id;
+            API42Interactions.run('GET', '/cursus/' + cursusId + '/projects?page=' + page).then(function (res) {
+                // Handle pagination
+                if (res.data.length) {
+                    $scope.getProjects(page + 1);
+                }
+                console.log('Got projects');
+                console.log(res);
+                console.log(res.headers());
                 var projects = res.data;
                 projects.forEach(function (project) {
-                    var projectSlug = $scope.getProjectSlug(project.url);
-                    API42Interactions.run('GET', '/projects/' + projectSlug).then(function (res) {
-                        res.data.slug = projectSlug;
+                    API42Interactions.run('GET', '/projects/' + project.slug).then(function (res) {
+                        res.data.slug = project.slug;
                         $scope.projects.push(res.data);
-                    })
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
                 });
+            }).catch(function (err) {
+                console.log(err);
             });
             $scope.$broadcast('scroll.refreshComplete');
-        }
+        };
+
     });

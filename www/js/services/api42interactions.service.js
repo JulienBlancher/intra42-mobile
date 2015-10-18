@@ -13,7 +13,7 @@ angular.module('intra42.services', []).service('API42Interactions', function ($q
         console.log('run API42Interactions with token ' + $rootScope.Authentication.tokens.access_token);
         return $http({
             method: method,
-            url: (route == '/oauth/token/info' ? 'https://api.intrav2.42.fr/oauth/token/info' : config.api42.baseUrl + route),
+            url: config.api42.baseUrl + route,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

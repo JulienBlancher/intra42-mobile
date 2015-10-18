@@ -4,6 +4,13 @@ angular.module('intra42.controllers')
         var pdf = PDFViewerService;
         $scope.project = {};
 
+        $scope.$watch('Authentication', function (n, o) {
+            if (n === undefined) {
+                return;
+            }
+            $scope.getProject();
+        }, true);
+
         $scope.getProject = function () {
             $scope.pdfURL = null;
             $scope.instance = null;
@@ -21,7 +28,8 @@ angular.module('intra42.controllers')
         };
 
         $scope.hasPDF = function () {
-            if (!$scope.project.attachments) {
+            console.log($scope.project.attachments);
+            if (!$scope.project.attachments || !$scope.project.attachments.length) {
                 return false;
             }
             for (var i = 0, len = $scope.project.attachments.length; i < len; i++) {
