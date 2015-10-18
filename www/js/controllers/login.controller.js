@@ -1,5 +1,10 @@
 angular.module('intra42.controllers')
-    .controller('LoginCtrl', function ($rootScope, $scope, $location, $ionicLoading, $ionicUser, $ionicHistory, $localStorage, API42Interactions, Session) {
+    .controller('LoginCtrl', function ($rootScope, $scope, $state, $ionicLoading, $ionicUser, $ionicHistory, $localStorage, API42Interactions, Session) {
+
+        console.log('Login Ctrl initialized');
+        if ($state.current.name == 'login' && $rootScope.Authentication) {
+            $state.go('app.dashboard');
+        }
 
         $scope.showLoad = function () {
             $ionicLoading.show({
@@ -26,8 +31,7 @@ angular.module('intra42.controllers')
                     };
 
                     Session.create(sessionData);
-                    $scope.hideLoad();
-                    $location.path('/app/dashboard');
+                    $state.go('app.dashboard');
                 }, function (err) {
                     $scope.error = 'There was an error getting your profile';
                 });
@@ -38,17 +42,12 @@ angular.module('intra42.controllers')
             });
         };
 
+        // TODO revoque access token when implemented
         $scope.doLogout = function () {
+            console.log('Logout requested');
             Session.destroy();
-
-            $localStorage.delete('userProjects');
-            $localStorage.delete('userSkills');
-            $localStorage.delete('defenses');
-            delete $scope.userProjects;
-            delete $scope.userSkills;
-            delete $scope.defenses;
             $ionicHistory.clearCache();
-            $location.path('/login');
+            $state.go('login');
         };
     }
 )

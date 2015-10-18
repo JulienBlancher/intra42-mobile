@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.service.analytics', 'intra42.controllers', 'intra42.services', 'intra42.filters', 'intra42.directives', 'ngPDFViewer'])
 
-    .run(function ($rootScope, $ionicPlatform, $ionicAnalytics, ServicesAvailability, Session) {
+    .run(function ($rootScope, $state, $ionicPlatform, $ionicAnalytics, ServicesAvailability, Session) {
         $ionicPlatform.ready(function () {
 
             // In-app update disabled for now because of Android issues .
@@ -23,11 +23,24 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
                 StatusBar.styleDefault();
             }
 
-            Session.check();
+            Session.check().then(function (res) {
+                console.log('session check success');
+                console.log(res);
+            }).catch(function (err) {
+                console.log('session check failed');
+                console.log(err);
+                $state.go('login');
+            });
 
-            $rootScope.$on('$stateChangeStart', function (event) {
-                if (!Session.check()) {
-                    event.preventDefault();
+            $rootScope.$on('$stateChangeStart', function (event, toState) {
+                console.log('State Change start to ' + toState.name);
+                if (toState.name != 'login') {
+                    Session.check().catch(function (err) {
+                        console.log('session check failed');
+                        console.log(err);
+                        event.preventDefault();
+                        $state.go('login');
+                    });
                 }
             });
         });
