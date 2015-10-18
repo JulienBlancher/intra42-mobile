@@ -31,4 +31,5 @@ angular.module('intra42.services').service('Session', function ($localStorage, $
             return session;
         }
     };
+
 });

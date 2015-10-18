@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.service.analytics', 'intra42.controllers', 'intra42.services', 'intra42.filters', 'intra42.directives', 'ngPDFViewer'])
 
-    .run(function ($ionicPlatform, $ionicAnalytics, ServicesAvailability) {
+    .run(function ($rootScope, $ionicPlatform, $ionicAnalytics, ServicesAvailability, Session) {
         $ionicPlatform.ready(function () {
 
             // In-app update disabled for now because of Android issues .
@@ -22,6 +22,12 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
+            $rootScope.$on('$stateChangeStart', function (event) {
+                if (!Session.check()) {
+                    event.preventDefault();
+                }
+            });
         });
     })
 
@@ -44,7 +50,12 @@ angular.module('intra42', ['ngCordova', 'ionic', 'ionic.service.core', 'ionic.se
                 url: "/app",
                 abstract: true,
                 templateUrl: "templates/menu.html",
-                controller: 'AppCtrl'
+                controller: 'AppCtrl',
+                resolve: {
+                    Session: function(Session) {
+                        return Session.check();
+                    }
+                }
             })
 
             .state('login', {
