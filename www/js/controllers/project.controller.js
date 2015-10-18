@@ -34,7 +34,7 @@ angular.module('intra42.controllers')
             }
             for (var i = 0, len = $scope.project.attachments.length; i < len; i++) {
                 var attachment = $scope.project.attachments[i];
-                if (attachment.link.substr(attachment.link.length - 4) == '.pdf' && attachment.link.substr(attachment.link.length - 7) != '.ro.pdf') {
+                if (attachment.name == 'Subject' && attachment.language.code != 'ro') {
                     return true;
                 }
             }
